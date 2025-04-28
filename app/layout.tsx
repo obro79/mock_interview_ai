@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
-import {Toast} from "next/dist/client/components/react-dev-overlay/ui/components/toast";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -25,7 +24,6 @@ export default function RootLayout({
         className={`${monaSans.className} antialiased pattern`}
       >
         {children}
-      <Toast/>
       </body>
     </html>
   );

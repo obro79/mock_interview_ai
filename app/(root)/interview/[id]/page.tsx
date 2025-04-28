@@ -9,7 +9,7 @@ import {
     getInterviewById,
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
-import DisplayTechIcons from "@/components/DisplayTechIcons";
+import TechIconsContainer from "@/components/TechIconsContainer";
 
 const InterviewDetails = async ({ params }: RouteParams) => {
     const { id } = await params;
@@ -39,7 +39,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                         <h3 className="capitalize">{interview.role} Interview</h3>
                     </div>
 
-                    <DisplayTechIcons techStack={interview.techstack} />
+                    <TechIconsContainer techStack={interview.techstack} />
                 </div>
 
                 <p className="bg-dark-200 px-4 py-2 rounded-lg h-fit">

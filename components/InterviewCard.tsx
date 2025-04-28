@@ -4,7 +4,7 @@ import {getRandomInterviewCover} from "@/lib/utils";
 import Image from 'next/image';
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import DisplayTechIcons from "@/components/DisplayTechIcons";
+import TechIconsContainer from "@/components/TechIconsContainer";
 import {getFeedbackByInterviewId} from "@/lib/actions/general.action";
 
 const InterviewCard = async ({interviewId, userId, role, type, techstack,createdAt }: InterviewCardProps) => {
@@ -42,7 +42,7 @@ const InterviewCard = async ({interviewId, userId, role, type, techstack,created
                     </p>
                 </div>
                 <div className="flex flex-row justify-between">
-                    <DisplayTechIcons techStack={techstack}/>
+                    <TechIconsContainer techStack={techstack}/>
                     <Button className="btn-primary">
                         <Link href={feedback ?
                             `/interview/${interviewId}/feedback`
