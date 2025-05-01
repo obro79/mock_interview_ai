@@ -17,9 +17,9 @@ This project is a web application designed to conduct voice-based interviews usi
 ## Technology Stack
 
 *   **Frontend:** Next.js, React, TypeScript
-*   **Styling:** Tailwind CSS (likely, based on `cn` utility)
+*   **Styling:** Tailwind CSS and shadcn
 *   **Voice AI:** Vapi SDK
-*   **Backend/Actions:** Next.js Server Actions (inferred from `lib/actions`)
+*   **Backend/Actions:** Next.js Server Actions
 
 ## Diagrams
 
