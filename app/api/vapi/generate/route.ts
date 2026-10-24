@@ -1,7 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 
-import { db } from "@/firebase/admin";
+import { adminDb } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 import {
     buildQuestionsPrompt,
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
             createdAt: new Date().toISOString(),
         };
 
-        await db.collection("interviews").add(interview);
+        await adminDb().collection("interviews").add(interview);
         return Response.json({ success: true }, { status: 200 });
     } catch (error) {
         console.error("Error generating interview:", error);

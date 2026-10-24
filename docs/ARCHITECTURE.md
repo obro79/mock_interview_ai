@@ -122,4 +122,3 @@ Keeping prompts and parsing in `lib/interview` means the parts most likely to br
 ## Known limitations
 
 - `/api/vapi/generate` trusts the `userid` sent by the Vapi workflow. It should verify a shared secret header from Vapi before writing to Firestore.
-- `next build` needs real Firebase Admin credentials, because the Admin SDK initializes at import time. CI therefore runs lint, typecheck and tests, not a full build.

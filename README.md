@@ -87,7 +87,7 @@ npm run typecheck   # tsc --noEmit
 npm run lint        # ESLint (next/core-web-vitals)
 ```
 
-The suite covers the core logic in `lib/interview` and `lib/tech`: prompt construction, parsing messy LLM output into questions, request validation and the feedback schema. CI runs all three checks on every push and pull request.
+The suite covers the core logic in `lib/interview` and `lib/tech`: prompt construction, parsing messy LLM output into questions, request validation and the feedback schema. CI runs all three checks plus a production build on every push and pull request.
 
 ## Credits
 
