@@ -1,26 +1,19 @@
-import {initializeApp, getApp, getApps} from "firebase/app";
-import {getAuth} from "firebase/auth";
-import {getFirestore} from "firebase/firestore";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-
-// Import the functions you need from the SDKs you need
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase web config is public by design (it ships to every browser), but it
+// lives in env vars so each deployment can point at its own project.
 const firebaseConfig = {
-    apiKey: "AIzaSyDqsIi44mKWQeg8euj-KHcV4zCJuHACqk4",
-    authDomain: "ai-interviewer-d87be.firebaseapp.com",
-    projectId: "ai-interviewer-d87be",
-    storageBucket: "ai-interviewer-d87be.firebasestorage.app",
-    messagingSenderId: "503235690196",
-    appId: "1:503235690196:web:32e0352d3fc9dd51cb4541",
-    measurementId: "G-RKQL76CYV3"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = !getApps.length? initializeApp(firebaseConfig): getApp();
+// getApps() guards against re-initializing during hot reload.
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);

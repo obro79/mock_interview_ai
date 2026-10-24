@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
+import { formatQuestionsForAgent } from "@/lib/interview/questions";
 
 enum CallStatus {
     INACTIVE = "INACTIVE",
@@ -52,17 +53,15 @@ const Agent = ({
         };
 
         const onSpeechStart = () => {
-            console.log("speech start");
             setIsSpeaking(true);
         };
 
         const onSpeechEnd = () => {
-            console.log("speech end");
             setIsSpeaking(false);
         };
 
         const onError = (error: Error) => {
-            console.log("Error:", error);
+            console.error("Vapi error:", error);
         };
 
         vapi.on("call-start", onCallStart);
@@ -88,8 +87,6 @@ const Agent = ({
         }
 
         const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-            console.log("handleGenerateFeedback");
-
             const { success, feedbackId: id } = await createFeedback({
                 interviewId: interviewId!,
                 userId: userId!,
@@ -100,7 +97,7 @@ const Agent = ({
             if (success && id) {
                 router.push(`/interview/${interviewId}/feedback`);
             } else {
-                console.log("Error saving feedback");
+                console.error("Error saving feedback");
                 router.push("/");
             }
         };
@@ -125,16 +122,9 @@ const Agent = ({
                 },
             });
         } else {
-            let formattedQuestions = "";
-            if (questions) {
-                formattedQuestions = questions
-                    .map((question) => `- ${question}`)
-                    .join("\n");
-            }
-
             await vapi.start(interviewer, {
                 variableValues: {
-                    questions: formattedQuestions,
+                    questions: formatQuestionsForAgent(questions),
                 },
             });
         }
