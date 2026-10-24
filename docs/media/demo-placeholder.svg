@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <rect width="760" height="300" rx="16" fill="#111827"/>
+  <rect x="8" y="8" width="744" height="284" rx="12" fill="none" stroke="#4B5563" stroke-dasharray="10 8" stroke-width="2"/>
+  <text x="380" y="140" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="28" font-weight="600" fill="#E5E7EB">🎙️ Demo GIF coming soon</text>
+  <text x="380" y="180" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="16" fill="#9CA3AF">Generate an interview by voice → answer → get scored feedback</text>
+</svg>
