@@ -15,7 +15,17 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const parsed = generateRequestSchema.safeParse(await request.json());
+    let body: unknown;
+    try {
+        body = await request.json();
+    } catch {
+        return Response.json(
+            { success: false, error: "Request body must be valid JSON" },
+            { status: 400 }
+        );
+    }
+
+    const parsed = generateRequestSchema.safeParse(body);
     if (!parsed.success) {
         return Response.json(
             { success: false, error: parsed.error.flatten() },

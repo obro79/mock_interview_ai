@@ -59,7 +59,7 @@ Sequence diagrams for both voice flows, the auth model and the data model are in
 
 ## Run locally
 
-**Prerequisites:** Node.js 20+, a Firebase project (Auth with email/password, Firestore), a [Vapi](https://vapi.ai) account and a [Gemini API key](https://aistudio.google.com/apikey).
+**Prerequisites:** Node.js 20.19+ or 22.12+, a Firebase project (Auth with email/password, Firestore), a [Vapi](https://vapi.ai) account and a [Gemini API key](https://aistudio.google.com/apikey).
 
 ```bash
 git clone https://github.com/obro79/mock_interview_ai.git
