@@ -1,10 +1,7 @@
 "use server";
 
-import { auth, db } from "@/firebase/admin";
+import { adminAuth, adminDb } from "@/firebase/admin";
 import { cookies } from "next/headers";
-import {firestore} from "firebase-admin";
-import DocumentData = firestore.DocumentData;
-import Query = firestore.Query;
 
 // Session duration (1 week)
 const SESSION_DURATION = 60 * 60 * 24 * 7;
@@ -14,7 +11,7 @@ export async function setSessionCookie(idToken: string) {
     const cookieStore = await cookies();
 
     // Create session cookie
-    const sessionCookie = await auth.createSessionCookie(idToken, {
+    const sessionCookie = await adminAuth().createSessionCookie(idToken, {
         expiresIn: SESSION_DURATION * 1000, // milliseconds
     });
 
@@ -33,7 +30,7 @@ export async function signUp(params: SignUpParams) {
 
     try {
         // check if user exists in db
-        const userRecord = await db.collection("users").doc(uid).get();
+        const userRecord = await adminDb().collection("users").doc(uid).get();
         if (userRecord.exists)
             return {
                 success: false,
@@ -41,7 +38,7 @@ export async function signUp(params: SignUpParams) {
             };
 
         // save user to db
-        await db.collection("users").doc(uid).set({
+        await adminDb().collection("users").doc(uid).set({
             name,
             email,
             // profileURL,
@@ -52,11 +49,11 @@ export async function signUp(params: SignUpParams) {
             success: true,
             message: "Account created successfully. Please sign in.",
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Error creating user:", error);
 
         // Handle Firebase specific errors
-        if (error.code === "auth/email-already-exists") {
+        if ((error as { code?: string })?.code === "auth/email-already-exists") {
             return {
                 success: false,
                 message: "This email is already in use",
@@ -74,7 +71,7 @@ export async function signIn(params: SignInParams) {
     const { email, idToken } = params;
 
     try {
-        const userRecord = await auth.getUserByEmail(email);
+        const userRecord = await adminAuth().getUserByEmail(email);
         if (!userRecord)
             return {
                 success: false,
@@ -82,8 +79,9 @@ export async function signIn(params: SignInParams) {
             };
 
         await setSessionCookie(idToken);
-    } catch (error: any) {
-        console.log("");
+        return { success: true, message: "Signed in successfully." };
+    } catch (error: unknown) {
+        console.error("Error signing in:", error);
 
         return {
             success: false,
@@ -107,10 +105,10 @@ export async function getCurrentUser(): Promise<User | null> {
     if (!sessionCookie) return null;
 
     try {
-        const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
+        const decodedClaims = await adminAuth().verifySessionCookie(sessionCookie, true);
 
         // get user info from db
-        const userRecord = await db
+        const userRecord = await adminDb()
             .collection("users")
             .doc(decodedClaims.uid)
             .get();
